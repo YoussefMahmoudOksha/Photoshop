@@ -243,3 +243,147 @@ void RotateImage ()
 
     }
 }
+
+
+void filterEnlargeImage ()
+{
+    int quart;
+    unsigned char templmage1[SIZE][SIZE];
+    unsigned char templmage2[SIZE][SIZE];
+
+    cout << "enter the quart number (1, 2, 3, 4): ";
+    cin >> quart;
+
+    if (quart == 1)
+    {
+
+       for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+               templmage1[i][j] = image[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+               templmage2[i * 2][j * 2] = templmage1[i][j] ;
+               templmage2[i * 2][(j * 2) + 1] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][j * 2] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               image[i][j] = templmage2[i][j] ;
+            }
+        }
+
+    }
+
+    else if (quart == 2)
+    {
+
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = SIZE/2; j< SIZE; j++)
+            {
+               templmage1[i][j - (SIZE/2)] = image[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+               templmage2[i * 2][j * 2] = templmage1[i][j] ;
+               templmage2[i * 2][(j * 2) + 1] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][j * 2] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               image[i][j] = templmage2[i][j] ;
+            }
+        }
+
+    }
+
+    else if (quart == 3)
+    {
+
+       for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+               templmage1[i - (SIZE/2)][j] = image[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j< SIZE/2; j++)
+            {
+               templmage2[i * 2][j * 2] = templmage1[i][j] ;
+               templmage2[i * 2][(j * 2) + 1] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][j * 2] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               image[i][j] = templmage2[i][j] ;
+            }
+        }
+
+    }
+
+    else if (quart == 4)
+    {
+
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = SIZE/2; j < SIZE; j++)
+            {
+               templmage1[i - (SIZE/2)][j - (SIZE/2)] = image[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j< SIZE/2; j++)
+            {
+               templmage2[i * 2][j * 2] = templmage1[i][j] ;
+               templmage2[i * 2][(j * 2) + 1] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][j * 2] = templmage1[i][j] ;
+               templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               image[i][j] = templmage2[i][j] ;
+            }
+        }
+
+    }
+
+    else
+    {
+        cout << "wrong input" << endl;
+    }
+}
