@@ -28,7 +28,7 @@ void RotateImage () ;
 void Darken_Lighten ();
 void filterDetectEdges();
 void shrink ();
-void mirror ();
+void filterMirrorImage ();
 void filterEnlargeImage ();
 void filterShuffleImage ();
 void blur () ;
@@ -250,21 +250,21 @@ void RotateImage ()
         }
     }
 
-    
+
     // if the imput is wrong
 
     else
     {
         cout << "wrong input" << endl;
 
-        for (int i = 0; i < SIZE; i++) 
+        for (int i = 0; i < SIZE; i++)
         {
-            for (int j = 0; j< SIZE; j++) 
+            for (int j = 0; j< SIZE; j++)
             {
                 image[i][j] = image[i][j]
             }
         }
-        
+
     }
 
 }
@@ -280,7 +280,7 @@ void filterEnlargeImage ()
     cout << "enter the quart number (1, 2, 3, 4): ";
     cin >> quart;
 
-     // check the input 
+     // check the input
 
     if (quart == 1)
     {
@@ -669,12 +669,122 @@ void filterShuffleImage ()
             }
         }
     }
- // save the final results in the main image 
+ // save the final results in the main image
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
         {
             image[i][j] = templmage[i][j];
+        }
+    }
+}
+
+
+void filterBlackAndWhiteImage() {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++) {
+            if (image[i][j] > 127)
+                image[i][j] = 255;
+            else
+                image[i][j] = 0;
+        }
+    }
+}
+
+void filterFlipImageHorizontal() {
+    unsigned char tempImage[SIZE][SIZE];
+
+
+    //To Flip Image Horizontal Into Temp Image
+    for (int i=0; i<SIZE; i++) {
+        for (int j=0; j<SIZE; j++) {
+            tempImage[i][j] = image[255-i][j];
+        }
+    }
+
+    //To Replace Image With Temp Image
+    for (int i=0; i<SIZE; i++) {
+        for (int j=0; j<SIZE; j++) {
+            image[i][j] = tempImage[i][j];
+        }
+    }
+}
+
+
+
+void filterFlipImageVertical() {
+    unsigned char tempImage[SIZE][SIZE];
+
+
+    // Flip Image Horizontal Into Temp Image
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            tempImage[i][j] = image[i][255 - j];
+        }
+    }
+
+    // Replace Image With Temp Image
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            image[i][j] = tempImage[i][j];
+        }
+    }
+}
+void filterMirrorImage() {
+    char choise;
+    cout << "mirror 1/2 image \n"
+            "Mirror (l)eft , (r)ight , (u)pper , (d)own  side ? ";
+    cin >> choise;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0;
+             j < SIZE; j++) {
+            if (choise == 'l') {
+                if (j >= 127) {
+                    image[i][j] = image[i][255 - j];
+                }
+            }
+
+            if (choise == 'u') {
+                if (i >= 127) {
+                    image[i][j] = image[255 - i][j];
+                }
+            }
+            if (choise == 'r')
+                image[i][j] = image[i][255 - j];
+
+            if (choise == 'd')
+                image[i][j] = image[255 - i][j];
+        }
+    }
+}
+
+
+void filterDetectEdges()
+{
+    long average = 0;
+    for (int i = 0; i < SIZE; i++){
+        for (int j = 0; j< SIZE; j++){
+            average += image[i][j]; // taking the sum of all elements in the photo
+        }
+    }
+    average /= (SIZE * SIZE); // to calculate the average color of the photo
+    for (int i = 0; i < SIZE; i++){
+        for (int j = 0; j< SIZE; j++){
+            if ( ( image[i][j] < average ) and ( image[i][j+1] < average ) ){
+                while ( image[i][j+4] < average){
+                    if (image[i+1][j]<average){
+                        // if there is a black cell and black cells after it , makes these two cells white
+                        image[i][j+2]=255;
+                        j+=1;
+                    }
+                    else{
+                        j+=1;
+                    }
+                }
+            }
+            if (image[i][j]>average){
+                image[i][j] = 255; // if cell is more than average color of photo make it white
+            }
         }
     }
 }
