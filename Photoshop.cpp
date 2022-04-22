@@ -167,3 +167,14 @@ void saveImage ()
     strcat (ImageFileName,".bmp");
     writeGSBMP (ImageFileName,image);
 }
+
+void InvertImage ()
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j< SIZE; j++)
+        {
+            image[i][j] = abs(image[i][j] - 255);
+        }
+    }
+}
