@@ -178,3 +178,68 @@ void InvertImage ()
         }
     }
 }
+
+
+void RotateImage ()
+{
+    int deg;
+    cout << "enter the deg (90 ,180, 270): ";
+    cin >> deg ;
+    unsigned char templmage1[SIZE][SIZE];
+    if (deg == 90)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j< SIZE; j++)
+            {
+               templmage1[i][j] = image[255-j][i] ;
+            }
+        }
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j< SIZE; j++)
+            {
+                image[i][j] = templmage1[i][j] ;
+            }
+        }
+    }
+    else if (deg == 180)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j< SIZE; j++)
+            {
+               templmage1[i][j] = image[255-i][255-j] ;
+            }
+        }
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j< SIZE; j++)
+            {
+                image[i][j] = templmage1[i][j] ;
+            }
+        }
+    }
+    else if (deg == 270)
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j< SIZE; j++)
+            {
+               templmage1[i][j] = image[j][255-i] ;
+            }
+        }
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j< SIZE; j++)
+            {
+                image[i][j] = templmage1[i][j] ;
+            }
+        }
+    }
+    else
+    {
+        cout << "wrong input" << endl;
+
+    }
+}
