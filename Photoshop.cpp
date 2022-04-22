@@ -134,3 +134,36 @@ int main()
     }
     return 0;
 }
+
+void loadImage()
+{
+    char ImageFileName [100];
+
+    cout << "Please enter file name of the image \n";
+    cin >> ImageFileName ;
+
+    strcat (ImageFileName,".bmp");
+    readGSBMP (ImageFileName,image);
+}
+
+void loadImage2 ()
+{
+    char ImageFileName [100];
+
+    cout << "Please enter name of image file to merge with: \n";
+    cin >> ImageFileName ;
+
+    strcat (ImageFileName,".bmp");
+    readGSBMP (ImageFileName,image2);
+}
+
+void saveImage ()
+{
+    char ImageFileName [100];
+
+    cout << "enter the target image file name : \n";
+    cin >> ImageFileName ;
+
+    strcat (ImageFileName,".bmp");
+    writeGSBMP (ImageFileName,image);
+}
