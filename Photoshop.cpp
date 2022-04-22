@@ -387,3 +387,252 @@ void filterEnlargeImage ()
         cout << "wrong input" << endl;
     }
 }
+
+void filterShuffleImage ()
+{
+    int first, second, third, foirth ;
+    unsigned char templmage[SIZE][SIZE];
+
+    cout << "Enter the first number in the order : ";
+    cin >> first ;
+
+    if (first == 1)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                    templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (first == 2)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = SIZE/2; j< SIZE; j++)
+            {
+                    templmage[i][j - (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (first == 3)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                   templmage[i - (SIZE/2)][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (first == 4)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = SIZE/2; j < SIZE; j++)
+            {
+                    templmage[i - (SIZE/2)][j - (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+
+    cout << "Enter the second number in the order : ";
+    cin >> second ;
+
+    if (second == 1)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                templmage[i][j + (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (second == 2)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = SIZE/2; j< SIZE; j++)
+            {
+                templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (second == 3)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                templmage[i - (SIZE/2)][j + (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (second == 4)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = SIZE/2; j < SIZE; j++)
+            {
+                    templmage[i - (SIZE/2)][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = SIZE/2; j< SIZE; j++)
+            {
+                    templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+
+    cout << "Enter the third number in the order : ";
+    cin >> third ;
+
+    if (third == 1)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                    templmage[i + (SIZE/2)][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (third == 2)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = SIZE/2; j< SIZE; j++)
+            {
+                templmage[i + (SIZE/2)][j - (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (third == 3)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (third == 4)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = SIZE/2; j < SIZE; j++)
+            {
+                templmage[i][j - (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+
+    cout << "Enter the fourth number in the order : ";
+    cin >> foirth ;
+
+    if (foirth == 1)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                templmage[i + (SIZE/2)][j + (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (foirth == 2)
+    {
+        for (int i = 0; i < SIZE/2; i++)
+        {
+            for (int j = SIZE/2; j< SIZE; j++)
+            {
+                templmage[i + (SIZE/2)][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (foirth == 3)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE/2; j++)
+            {
+                templmage[i][j + (SIZE/2)] = image[i][j] ;
+            }
+        }
+    }
+
+    else if (foirth == 4)
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = SIZE/2; j < SIZE; j++)
+            {
+                templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+    else
+    {
+        for (int i = SIZE/2; i < SIZE; i++)
+        {
+            for (int j = SIZE/2; j < SIZE; j++)
+            {
+                templmage[i][j] = image[i][j] ;
+            }
+        }
+    }
+
+    for (int i = 0; i < SIZE; i++)
+    {
+        for (int j = 0; j < SIZE; j++)
+        {
+            image[i][j] = templmage[i][j];
+        }
+    }
+}
