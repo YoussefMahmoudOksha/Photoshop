@@ -134,6 +134,7 @@ int main()
     }
     return 0;
 }
+// load Image function
 
 void loadImage()
 {
@@ -145,6 +146,7 @@ void loadImage()
     strcat (ImageFileName,".bmp");
     readGSBMP (ImageFileName,image);
 }
+// load Image2 function
 
 void loadImage2 ()
 {
@@ -156,6 +158,7 @@ void loadImage2 ()
     strcat (ImageFileName,".bmp");
     readGSBMP (ImageFileName,image2);
 }
+// save Image function
 
 void saveImage ()
 {
@@ -168,6 +171,8 @@ void saveImage ()
     writeGSBMP (ImageFileName,image);
 }
 
+// the invert image filter
+
 void InvertImage ()
 {
     for (int i = 0; i < SIZE; i++)
@@ -179,6 +184,7 @@ void InvertImage ()
     }
 }
 
+// the rotate image filter
 
 void RotateImage ()
 {
@@ -186,8 +192,12 @@ void RotateImage ()
     cout << "enter the deg (90 ,180, 270): ";
     cin >> deg ;
     unsigned char templmage1[SIZE][SIZE];
+
+    // check the input number
+
     if (deg == 90)
     {
+        // rotate imgege 90 deg
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j< SIZE; j++)
@@ -205,6 +215,7 @@ void RotateImage ()
     }
     else if (deg == 180)
     {
+        // rotate imgege 180 deg
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j< SIZE; j++)
@@ -222,6 +233,7 @@ void RotateImage ()
     }
     else if (deg == 270)
     {
+        // rotate imgege 270 deg
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j< SIZE; j++)
@@ -237,13 +249,27 @@ void RotateImage ()
             }
         }
     }
+
+    
+    // if the imput is wrong
+
     else
     {
         cout << "wrong input" << endl;
 
+        for (int i = 0; i < SIZE; i++) 
+        {
+            for (int j = 0; j< SIZE; j++) 
+            {
+                image[i][j] = image[i][j]
+            }
+        }
+        
     }
+
 }
 
+// the enlarge image filter
 
 void filterEnlargeImage ()
 {
@@ -254,9 +280,11 @@ void filterEnlargeImage ()
     cout << "enter the quart number (1, 2, 3, 4): ";
     cin >> quart;
 
+     // check the input 
+
     if (quart == 1)
     {
-
+     // cut the quart for the input number
        for (int i = 0; i < SIZE/2; i++)
         {
             for (int j = 0; j < SIZE/2; j++)
@@ -264,6 +292,8 @@ void filterEnlargeImage ()
                templmage1[i][j] = image[i][j] ;
             }
         }
+
+        // enlarge image
 
         for (int i = 0; i < SIZE/2; i++)
         {
@@ -275,6 +305,7 @@ void filterEnlargeImage ()
                templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
             }
         }
+     // save the image
 
         for (int i = 0; i < SIZE; i++)
         {
@@ -288,7 +319,7 @@ void filterEnlargeImage ()
 
     else if (quart == 2)
     {
-
+     // cut the quart for the input number
         for (int i = 0; i < SIZE/2; i++)
         {
             for (int j = SIZE/2; j< SIZE; j++)
@@ -296,7 +327,7 @@ void filterEnlargeImage ()
                templmage1[i][j - (SIZE/2)] = image[i][j] ;
             }
         }
-
+     // enlarge image
         for (int i = 0; i < SIZE/2; i++)
         {
             for (int j = 0; j < SIZE/2; j++)
@@ -307,7 +338,7 @@ void filterEnlargeImage ()
                templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
             }
         }
-
+     // save the image
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j < SIZE; j++)
@@ -320,7 +351,7 @@ void filterEnlargeImage ()
 
     else if (quart == 3)
     {
-
+     // cut the quart for the input number
        for (int i = SIZE/2; i < SIZE; i++)
         {
             for (int j = 0; j < SIZE/2; j++)
@@ -329,6 +360,7 @@ void filterEnlargeImage ()
             }
         }
 
+     // enlarge image
         for (int i = 0; i < SIZE/2; i++)
         {
             for (int j = 0; j< SIZE/2; j++)
@@ -339,6 +371,8 @@ void filterEnlargeImage ()
                templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
             }
         }
+
+     // save the image
 
         for (int i = 0; i < SIZE; i++)
         {
@@ -352,7 +386,7 @@ void filterEnlargeImage ()
 
     else if (quart == 4)
     {
-
+     // cut the quart for the input number
         for (int i = SIZE/2; i < SIZE; i++)
         {
             for (int j = SIZE/2; j < SIZE; j++)
@@ -360,7 +394,7 @@ void filterEnlargeImage ()
                templmage1[i - (SIZE/2)][j - (SIZE/2)] = image[i][j] ;
             }
         }
-
+     // enlarge image
         for (int i = 0; i < SIZE/2; i++)
         {
             for (int j = 0; j< SIZE/2; j++)
@@ -371,7 +405,7 @@ void filterEnlargeImage ()
                templmage2[(i * 2) + 1][(j * 2) + 1] = templmage1[i][j] ;
             }
         }
-
+     // save the image
         for (int i = 0; i < SIZE; i++)
         {
             for (int j = 0; j < SIZE; j++)
@@ -381,17 +415,21 @@ void filterEnlargeImage ()
         }
 
     }
-
+ // if the input is wrong
     else
     {
         cout << "wrong input" << endl;
     }
 }
 
+// the shuffle image filter
+
 void filterShuffleImage ()
 {
     int first, second, third, foirth ;
     unsigned char templmage[SIZE][SIZE];
+
+    // show the input number then put the quart in the new place
 
     cout << "Enter the first number in the order : ";
     cin >> first ;
@@ -439,7 +477,7 @@ void filterShuffleImage ()
             }
         }
     }
-
+    // if the input is wrong the quart in will be same
     else
     {
         for (int i = 0; i < SIZE/2; i++)
@@ -451,6 +489,7 @@ void filterShuffleImage ()
         }
     }
 
+    // show the input number then put the quart in the new place
 
     cout << "Enter the second number in the order : ";
     cin >> second ;
@@ -498,7 +537,7 @@ void filterShuffleImage ()
             }
         }
     }
-
+ // if the input is wrong the quart in will be same
     else
     {
         for (int i = 0; i < SIZE/2; i++)
@@ -510,6 +549,8 @@ void filterShuffleImage ()
         }
     }
 
+
+ // show the input number then put the quart in the new place
 
     cout << "Enter the third number in the order : ";
     cin >> third ;
@@ -557,7 +598,7 @@ void filterShuffleImage ()
             }
         }
     }
-
+ // if the input is wrong the quart in will be same
     else
     {
         for (int i = SIZE/2; i < SIZE; i++)
@@ -568,6 +609,7 @@ void filterShuffleImage ()
             }
         }
     }
+ // show the input number then put the quart in the new place
 
 
     cout << "Enter the fourth number in the order : ";
@@ -616,7 +658,7 @@ void filterShuffleImage ()
             }
         }
     }
-
+ // if the input is wrong the quart in will be same
     else
     {
         for (int i = SIZE/2; i < SIZE; i++)
@@ -627,7 +669,7 @@ void filterShuffleImage ()
             }
         }
     }
-
+ // save the final results in the main image 
     for (int i = 0; i < SIZE; i++)
     {
         for (int j = 0; j < SIZE; j++)
