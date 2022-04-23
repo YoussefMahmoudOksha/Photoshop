@@ -32,8 +32,6 @@ void filterMirrorImage ();
 void filterEnlargeImage ();
 void filterShuffleImage ();
 void blur () ;
-int getchoice();
-
 
 
 int main()
@@ -171,6 +169,17 @@ void saveImage ()
     writeGSBMP (ImageFileName,image);
 }
 
+void filterBlackAndWhiteImage() {
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j< SIZE; j++) {
+            if (image[i][j] > 127)
+                image[i][j] = 255;
+            else
+                image[i][j] = 0;
+        }
+    }
+}
+
 // the invert image filter
 
 void InvertImage ()
@@ -180,6 +189,56 @@ void InvertImage ()
         for (int j = 0; j< SIZE; j++)
         {
             image[i][j] = abs(image[i][j] - 255);
+        }
+    }
+}
+ // this filter to merge two image
+void Merge()
+{
+    for (int i = 0; i < SIZE; i++)
+    {
+      for (int j = 0; j< SIZE; j++)
+      {
+          //calculate the average of two pixel
+          image[i][j]=(image[i][j]+image2[i][j])/2;
+      }
+    }
+}
+
+void filterFlipImageHorizontal() {
+    unsigned char tempImage[SIZE][SIZE];
+
+
+    //To Flip Image Horizontal Into Temp Image
+    for (int i=0; i<SIZE; i++) {
+        for (int j=0; j<SIZE; j++) {
+            tempImage[i][j] = image[255-i][j];
+        }
+    }
+
+    //To Replace Image With Temp Image
+    for (int i=0; i<SIZE; i++) {
+        for (int j=0; j<SIZE; j++) {
+            image[i][j] = tempImage[i][j];
+        }
+    }
+}
+
+void filterFlipImageVertical() {
+    unsigned char tempImage[SIZE][SIZE];
+
+
+    // Flip Image Horizontal Into Temp Image
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            tempImage[i][j] = image[i][255 - j];
+        }
+    }
+
+    // Replace Image With Temp Image
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            image[i][j] = tempImage[i][j];
         }
     }
 }
@@ -267,6 +326,64 @@ void RotateImage ()
 
     }
 
+}
+// this filter to make image darken or lighten
+void Darken_Lighten ()
+{
+    char select ;
+    cout << "Do you want to (d)arken or (l)ighten? \n";
+    cin >> select;
+    for (int i = 0; i < SIZE; i++)
+    {
+      for (int j = 0; j< SIZE; j++)
+      {
+          if (select == 'l')
+          {
+                image[i][j]=(image[i][j]+255)/2;
+                if (image[i][j]>255)
+                    image[i][j]=255;
+          }
+          else if(select == 'd')
+          {
+              image[i][j]=image[i][j]/2;
+          }
+          else
+          {
+              cout << "this input is invalid , try again \n";
+              return Darken_Lighten ();
+          }
+      }
+    }
+}
+
+void filterDetectEdges()
+{
+    long average = 0;
+    for (int i = 0; i < SIZE; i++){
+        for (int j = 0; j< SIZE; j++){
+            average += image[i][j]; // taking the sum of all elements in the photo
+        }
+    }
+    average /= (SIZE * SIZE); // to calculate the average color of the photo
+    for (int i = 0; i < SIZE; i++){
+        for (int j = 0; j< SIZE; j++){
+            if ( ( image[i][j] < average ) and ( image[i][j+1] < average ) ){
+                while ( image[i][j+4] < average){
+                    if (image[i+1][j]<average){
+                        // if there is a black cell and black cells after it , makes these two cells white
+                        image[i][j+2]=255;
+                        j+=1;
+                    }
+                    else{
+                        j+=1;
+                    }
+                }
+            }
+            if (image[i][j]>average){
+                image[i][j] = 255; // if cell is more than average color of photo make it white
+            }
+        }
+    }
 }
 
 // the enlarge image filter
@@ -413,12 +530,143 @@ void filterEnlargeImage ()
                image[i][j] = templmage2[i][j] ;
             }
         }
-
     }
  // if the input is wrong
     else
     {
         cout << "wrong input" << endl;
+    }
+}
+// this filter to shrink the image
+void shrink ()
+{
+    unsigned char templmage1[SIZE][SIZE];
+    unsigned char templmage2[SIZE][SIZE];
+    string select ;
+
+    cout << "Shrink to (1/2), (1/3) or (1/4)? \n";
+    cin >> select ;
+    // shrink image to 1/2
+    if (select == "1/2")
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               templmage1[i][j] = image[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               templmage2[i / 2][j / 2] = templmage1[i][j] ;
+               templmage2[i / 2][(j / 2) - 1] = templmage1[i][j] ;
+               templmage2[(i / 2) - 1][j / 2] = templmage1[i][j] ;
+               templmage2[(i / 2) - 1][(j / 2) - 1] = templmage1[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               image[i][j] = templmage2[i][j] ;
+            }
+        }
+    }
+    // shrink image to 1/3
+    else if (select == "1/3")
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               templmage1[i][j] = image[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               templmage2[i / 3][j / 3] = templmage1[i][j] ;
+               templmage2[i / 3][(j / 3) - 1] = templmage1[i][j] ;
+               templmage2[(i / 3) - 1][j / 3] = templmage1[i][j] ;
+               templmage2[(i / 3) - 1][(j / 3) - 1] = templmage1[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               image[i][j] = templmage2[i][j] ;
+            }
+        }
+    }
+    // shrink image to 1/4
+    else if (select == "1/4")
+    {
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               templmage1[i][j] = image[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               templmage2[i / 4][j / 4] = templmage1[i][j] ;
+               templmage2[i / 4][(j / 4) - 1] = templmage1[i][j] ;
+               templmage2[(i / 4) - 1][j / 4] = templmage1[i][j] ;
+               templmage2[(i / 4) - 1][(j / 4) - 1] = templmage1[i][j] ;
+            }
+        }
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+               image[i][j] = templmage2[i][j] ;
+            }
+        }
+    }
+    // if input don't equal 1/2 or 1/3 or 1/4 ,this is invalid input
+    else if(select!="1/2" || select!="1/3" || select!="1/4")
+    {
+        cout << "this value invalid ,please try again \n";
+    }
+}
+void filterMirrorImage() {
+    char choise;
+    cout << "mirror 1/2 image \n"
+            "Mirror (l)eft , (r)ight , (u)pper , (d)own  side ? ";
+    cin >> choise;
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0;
+             j < SIZE; j++) {
+            if (choise == 'l') {
+                if (j >= 127) {
+                    image[i][j] = image[i][255 - j];
+                }
+            }
+
+            if (choise == 'u') {
+                if (i >= 127) {
+                    image[i][j] = image[255 - i][j];
+                }
+            }
+            if (choise == 'r')
+                image[i][j] = image[i][255 - j];
+
+            if (choise == 'd')
+                image[i][j] = image[255 - i][j];
+        }
     }
 }
 
@@ -678,113 +926,28 @@ void filterShuffleImage ()
         }
     }
 }
-
-
-void filterBlackAndWhiteImage() {
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j< SIZE; j++) {
-            if (image[i][j] > 127)
-                image[i][j] = 255;
-            else
-                image[i][j] = 0;
-        }
-    }
-}
-
-void filterFlipImageHorizontal() {
-    unsigned char tempImage[SIZE][SIZE];
-
-
-    //To Flip Image Horizontal Into Temp Image
-    for (int i=0; i<SIZE; i++) {
-        for (int j=0; j<SIZE; j++) {
-            tempImage[i][j] = image[255-i][j];
-        }
-    }
-
-    //To Replace Image With Temp Image
-    for (int i=0; i<SIZE; i++) {
-        for (int j=0; j<SIZE; j++) {
-            image[i][j] = tempImage[i][j];
-        }
-    }
-}
-
-
-
-void filterFlipImageVertical() {
-    unsigned char tempImage[SIZE][SIZE];
-
-
-    // Flip Image Horizontal Into Temp Image
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            tempImage[i][j] = image[i][255 - j];
-        }
-    }
-
-    // Replace Image With Temp Image
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            image[i][j] = tempImage[i][j];
-        }
-    }
-}
-void filterMirrorImage() {
-    char choise;
-    cout << "mirror 1/2 image \n"
-            "Mirror (l)eft , (r)ight , (u)pper , (d)own  side ? ";
-    cin >> choise;
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0;
-             j < SIZE; j++) {
-            if (choise == 'l') {
-                if (j >= 127) {
-                    image[i][j] = image[i][255 - j];
-                }
-            }
-
-            if (choise == 'u') {
-                if (i >= 127) {
-                    image[i][j] = image[255 - i][j];
-                }
-            }
-            if (choise == 'r')
-                image[i][j] = image[i][255 - j];
-
-            if (choise == 'd')
-                image[i][j] = image[255 - i][j];
-        }
-    }
-}
-
-
-void filterDetectEdges()
+// this filter to blur image
+void blur ()
 {
-    long average = 0;
-    for (int i = 0; i < SIZE; i++){
-        for (int j = 0; j< SIZE; j++){
-            average += image[i][j]; // taking the sum of all elements in the photo
-        }
-    }
-    average /= (SIZE * SIZE); // to calculate the average color of the photo
-    for (int i = 0; i < SIZE; i++){
-        for (int j = 0; j< SIZE; j++){
-            if ( ( image[i][j] < average ) and ( image[i][j+1] < average ) ){
-                while ( image[i][j+4] < average){
-                    if (image[i+1][j]<average){
-                        // if there is a black cell and black cells after it , makes these two cells white
-                        image[i][j+2]=255;
-                        j+=1;
-                    }
-                    else{
-                        j+=1;
-                    }
-                }
-            }
-            if (image[i][j]>average){
-                image[i][j] = 255; // if cell is more than average color of photo make it white
-            }
-        }
-    }
+    for (int i = 1; i <= SIZE; i++) {
+     for (int j = 1; j<= SIZE; j++) {
+                 image[i][j]=(image[i][j]+image[i-1][j-1]+image[i-1][j]+image[i+1][j]+image[i][j-1]
+                              +image[i][j+1]+image[i-1][j+1]+ image[i][j+1]+image[i+1][j+1]
+                              +image[i-2][j-2]+image[i-2][j+2]+image[i-1][j-2]+image[i-1][j+2]+
+                              image[i][j-2]+image[i][j+2]+image[i+1][j-2]+image[i+1][j+2]
+                              +image[i+2][j-2]+image[i+2][j-1]+image[i+2][j]+image[i+2][j+1]+
+                              image[j+2][i+2])/24;
+  }
+  }
+  for (int i = 1; i <= SIZE; i++) {
+    for (int j = 1; j<= SIZE; j++) {
+         image[i][j]=(image[i][j]+image[i-1][j-1]+image[i-1][j]+image[i+1][j]+image[i][j-1]
+                      +image[i][j+1]+image[i-1][j+1]+ image[i][j+1]+image[i+1][j+1]
+                      +image[i-2][j-2]+image[i-2][j+2]+image[i-1][j-2]+image[i-1][j+2]+
+                      image[i][j-2]+image[i][j+2]+image[i+1][j-2]+image[i+1][j+2]
+                      +image[i+2][j-2]+image[i+2][j-1]+image[i+2][j]+image[i+2][j+1]+
+                      image[j+2][i+2])/24;
+  }
+  }
+
 }
